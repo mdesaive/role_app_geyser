@@ -1,0 +1,71 @@
+- name: Add group geyser.
+  group:
+    name: geyser
+    state: present
+
+- name: Add user geyser.
+  user:
+    name: geyser
+    shell: /bin/bash
+    home: /opt/geyser
+    group: geyser
+
+- name: Prepare working directory for geyser
+  file:
+    path: "/opt/geyser/geyser-{{ item }}"
+    state: directory
+    owner: geyser
+    group: geyser
+    mode: '755'
+  with_items: "{{ geyser_versions }}"
+
+- debug:
+    var: geyser_files
+
+- name: Place geyser jar files
+  copy:
+    src: "{{ geyser_files[item] }}"
+    dest: "/opt/geyser/geyser-{{ item }}/Geyser.jar"
+    owner: geyser
+    group: geyser
+  loop: "{{ geyser_versions }}"
+  notify: Restart Geyser
+
+- name: Prepare Geyser config.yml
+  template:
+    src: geyser-config.yml.j2
+    dest: /opt/geyser/geyser-{{ geyser_version }}/config.yml
+    owner: geyser
+    group: geyser
+    # notify: "Restart Minecraft"
+  loop: "{{ geyser_versions }}"
+  loop_control:
+    loop_var: geyser_version
+  notify: Restart Geyser
+
+- name: Copy key.pem
+  file:
+    src: /opt/paper/run/plugins/floodgate/key.pem
+    dest: /opt/geyser/geyser-{{ item }}/key.pem
+    state: link
+  loop: "{{ geyser_versions }}"
+  notify: Restart Geyser
+
+- name: Prepare systemd unit file
+  template:
+    src: geyser.service.j2
+    dest: /etc/systemd/system/geyser@.service
+    owner: root
+    group: root
+    mode: '644'
+
+- name: Activate new systemd file
+  systemd:
+    daemon_reload: yes
+
+- name: Start and enable geyser service
+  service:
+    name: geyser@{{ item }}
+    state: started
+    enabled: yes
+  loop: "{{ geyser_versions }}"

@@ -1,2 +1,11 @@
 ---
 # vars file for role_app_geyser/
+geyser_files:
+  1.18: Geyser-Build-1105-2022-05-30.jar
+  1.19: Geyser-Build-1175-2022-08-13.jar
+geyser_floodgate_files:
+  1.18: floodgate-spigot-Build-066-2022-06-08.jar
+  1.19: floodgate-spigot-Build-073-2022-08-10.jar
+geyser_ports:
+  1.18: 19131
+  1.19: 19132

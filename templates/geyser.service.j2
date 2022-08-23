@@ -1,0 +1,26 @@
+[Unit]
+Description=Geyser Proxy for Client Version %i
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/geyser/geyser-%i
+
+User=geyser
+Group=geyser
+
+Restart=always
+
+ExecStart=/usr/bin/screen -DmS geyser-%i /usr/bin/java -Xms{{ geyser_mem_start }} -Xmx{{ geyser_mem_max }} -jar Geyser.jar nogui
+
+# ExecStop=/usr/bin/screen -p 0 -S geyser-%i -X eval 'stuff "say SERVER SHUTTING DOWN IN 15 SECONDS..."\015'
+# ExecStop=/bin/sleep 5
+# ExecStop=/usr/bin/screen -p 0 -S geyser-%i -X eval 'stuff "say SERVER SHUTTING DOWN IN 10 SECONDS..."\015'
+# ExecStop=/bin/sleep 5
+# ExecStop=/usr/bin/screen -p 0 -S geyser-%i -X eval 'stuff "say SERVER SHUTTING DOWN IN 5 SECONDS..."\015'
+# ExecStop=/bin/sleep 5
+# ExecStop=/usr/bin/screen -p 0 -S geyser-%i -X eval 'stuff "save-all"\015'
+# ExecStop=/usr/bin/screen -p 0 -S geyser-%i -X eval 'stuff "stop"\015'
+
+[Install]
+WantedBy=multi-user.target
+
