@@ -58,6 +58,7 @@
     owner: root
     group: root
     mode: '644'
+  notify: Restart Geyser
 
 - name: Activate new systemd file
   systemd:
