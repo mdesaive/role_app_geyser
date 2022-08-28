@@ -47,6 +47,7 @@
   file:
     src: /opt/paper/run/plugins/floodgate/key.pem
     dest: /opt/geyser/geyser-{{ item }}/key.pem
+    force: true
     state: link
   loop: "{{ geyser_versions }}"
   notify: Restart Geyser
