@@ -1,10 +1,11 @@
 ---
 # vars file for role_app_geyser/
 geyser_files:
-  1.18: Geyser-Build-1105-2022-05-30.jar
-  1.19: Geyser-Build-1175-2022-08-13.jar
-  1.19.2: Geyser-Build-1181-2022-08-23.jar
+  # 1.18: Geyser-Build-1105-2022-05-30.jar
+  # 1.19: Geyser-Build-1175-2022-08-13.jar
+  # Last working 1.19.2: Geyser-Build-1181-2022-08-23.jar
+  1.19.2: Geyser-Standalone-Build-1212-2022-10-16.jar
 geyser_ports:
-  1.19: 19130
-  1.18: 19131
+  # 1.19: 19130
+  # 1.18: 19131
   1.19.2: 19132
